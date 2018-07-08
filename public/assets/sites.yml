@@ -1,0 +1,11 @@
+websites:
+    - http://wiadomosci.onet.pl:
+        - wiadomości ze świata
+        - wiadomości z kraju
+    - http://tvn24.pl:
+        - wiadomości ze świata
+        - wiadomości z kraju
+    - http://rmf24.pl:
+        - wiadomości ze świata
+        - wiadomości z kraju
+        - rmf24

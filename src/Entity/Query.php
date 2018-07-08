@@ -31,6 +31,12 @@ class Query
      */
     private $position;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Keyword", inversedBy="queries")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $keyword;
+
     public function getId()
     {
         return $this->id;
@@ -68,6 +74,18 @@ class Query
     public function setPosition(int $position): self
     {
         $this->position = $position;
+
+        return $this;
+    }
+
+    public function getKeyword(): ?Keyword
+    {
+        return $this->keyword;
+    }
+
+    public function setKeyword(?Keyword $keyword): self
+    {
+        $this->keyword = $keyword;
 
         return $this;
     }

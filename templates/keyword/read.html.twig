@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Odczyt danych z pliku{% endblock %}
+
+{% block body %}
+    <h1>Odczy danych z pliku i zapis do bazy danych</h1>
+    
+    {{ dump(yaml) }}
+    
+    
+    <h2>Zapisano powyższe dane, o ile jeszcze nie istniały w bazie danych</h2>
+
+{% endblock %}
