@@ -2,6 +2,7 @@
 
 ### Server specyfication + framework
 XAMPP: Apache + MariaDB + PHP 7.2 + Perl on Windows 10: paths with backslashes
+
 Symfony 4.1
 
 ## Installation steps
