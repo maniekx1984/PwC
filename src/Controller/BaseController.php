@@ -16,6 +16,6 @@ class BaseController extends Controller
      */
     public function index(): Response
     {
-        return $this->redirectToRoute('keyword_index');
+        return $this->redirectToRoute('query_index');
     }
 }

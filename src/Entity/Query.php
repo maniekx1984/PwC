@@ -22,7 +22,7 @@ class Query
     private $queryTime;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="string", length=255)
      */
     private $responseCode;
 
@@ -54,12 +54,12 @@ class Query
         return $this;
     }
 
-    public function getResponseCode(): ?int
+    public function getResponseCode(): ?string
     {
         return $this->responseCode;
     }
 
-    public function setResponseCode(int $responseCode): self
+    public function setResponseCode(string $responseCode): self
     {
         $this->responseCode = $responseCode;
 

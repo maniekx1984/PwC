@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Lista zapytań{% endblock %}
+
+{% block body %}
+    <h1>Query index</h1>
+
+    <a href="{{ path('logout') }}">wyloguj się</a><br />
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>QueryTime</th>
+                <th>ResponseCode</th>
+                <th>Position</th>
+                <th>Keyword</th>
+                <th>Site</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for query in queries %}
+            <tr>
+                <td>{{ query.id }}</td>
+                <td>{{ query.queryTime ? query.queryTime|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ query.responseCode }}</td>
+                <td>{{ query.position }}</td>
+                <td>{{ query.keyword.keyword }}</td>
+                <td>{{ query.keyword.site.name }}</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}
