@@ -52,7 +52,7 @@ Remember to change Sites to search value to Search the entire web...
 
 KEY can be created here: https://console.developers.google.com/apis/library/customsearch.googleapis.com
 
-## database
+### database
 In the application root directory, not in public, run fallowing commands:
 ```
 php bin\console doctrine:migrations:migrate
