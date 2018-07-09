@@ -13,7 +13,7 @@
                 <th>Id</th>
                 <th>QueryTime</th>
                 <th>ResponseCode</th>
-                <th>Position</th>
+                <th>Position (w pierwszej 10-tce)</th>
                 <th>Keyword</th>
                 <th>Site</th>
             </tr>
@@ -24,7 +24,13 @@
                 <td>{{ query.id }}</td>
                 <td>{{ query.queryTime ? query.queryTime|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ query.responseCode }}</td>
-                <td>{{ query.position }}</td>
+                <td>
+                    {% if query.position == 0 %}
+                        Nie znaleziono
+                    {% else %}
+                        {{ query.position }}
+                    {% endif %}
+                </td>
                 <td>{{ query.keyword.keyword }}</td>
                 <td>{{ query.keyword.site.name }}</td>
             </tr>
