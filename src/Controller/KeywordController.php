@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Keyword;
+use App\Entity\Query;
 use App\Entity\Site;
 use App\Repository\KeywordRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -47,7 +48,8 @@ class KeywordController extends Controller
             
             foreach($site[key($site)] as $keyword){
                 $findKeyword = $this->getDoctrine()->getRepository(Keyword::class)->findOneBy(
-                    ['keyword' => $keyword]
+                    ['keyword' => $keyword,
+                        'site' => $newSite]
                     );
                 if(!$findKeyword){
                     $newKeyword = new Keyword();
@@ -61,5 +63,67 @@ class KeywordController extends Controller
         }
         
         return $this->render('keyword/read.html.twig', array('yaml' => $yaml));
+    }
+
+    /**
+     * @Route("/readApi", name="keyword_read_api", methods="GET")
+     */
+    public function readApi()
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $sites = $this->getDoctrine()->getRepository(Site::class)->findAll();
+        foreach ($sites as $site){
+            $keywords = $this->getDoctrine()->getRepository(Keyword::class)->findBy(
+                ['site' => $site]
+            );
+            foreach ($keywords as $keyword){
+                $found = 0;
+                $start = 1;
+                while($found === 0){
+                    $curl = curl_init();
+                    curl_setopt($curl, CURLOPT_URL, 'https://www.googleapis.com/customsearch/v1?q=' . urlencode($keyword->getKeyword()) . '&start=' . $start . '&key=' . $this->getParameter('googleapi.key') . '&cx=' . $this->getParameter('googleapi.cx'));
+                    curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-type: application/json'));
+                    curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+
+                    $response = curl_exec($curl);
+                    $data = json_decode($response);
+
+                    foreach ($data->items as $item) {
+                        if(!(strpos($item->link, $site->getName())) === false){
+                            $query = new Query();
+                            $query->setKeyword($keyword);
+                            $query->setResponseCode('1');
+                            $query->setPosition(key($item)+1);
+                            $query->setQueryTime(new \DateTime());
+                            $entityManager->persist($query);
+                            $found = 1;
+                        }
+                    }
+
+                }
+            }
+        }
+
+        $entityManager->flush();
+
+        return new Response(
+            '<html><body>ok</body></html>'
+        );
+    }
+
+    /**
+     * @Route("/readApiTest", name="keyword_readtest_api", methods="GET")
+     */
+    public function readApiTest()
+    {
+        $curl = curl_init();
+        curl_setopt($curl, CURLOPT_URL, 'https://www.googleapis.com/customsearch/v1?q=wiadomosci&key=' . $this->getParameter('googleapi.key') . '&cx=' . $this->getParameter('googleapi.cx'));
+        curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-type: application/json'));
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+
+        $response = curl_exec($curl);
+
+        $data = json_decode($response);
+        dump($data);exit;
     }
 }
