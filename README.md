@@ -47,7 +47,7 @@ GOOGLE_KEY=
 ```
 
 CX can be created here: https://support.google.com/customsearch/answer/2649143?hl=en
-- remember to change Sites to search value to Search the entire web...
+Remember to change Sites to search value to Search the entire web...
 
 KEY can be created here: https://console.developers.google.com/apis/library/customsearch.googleapis.com
 
