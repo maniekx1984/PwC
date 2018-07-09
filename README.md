@@ -47,6 +47,7 @@ GOOGLE_KEY=
 ```
 
 CX can be created here: https://support.google.com/customsearch/answer/2649143?hl=en
+
 Remember to change Sites to search value to Search the entire web...
 
 KEY can be created here: https://console.developers.google.com/apis/library/customsearch.googleapis.com
@@ -67,6 +68,7 @@ php bin\console doctrine:query:sql "INSERT INTO `user` (`id`, `username`, `passw
 2. Login with username: query_user and password: Haslohaslo1
 3. Edit websites in public\assets\sites.yml
 4. Run commands in application root directory:
+
 4.a. This will read sites.yml file and store sites and keywords in database
 ```
 php bin\console app:read-file
